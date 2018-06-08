@@ -1,20 +1,23 @@
 $(document).ready( function() {
   
   //VARIABLES --------------------------------------------------------
-  var flashcards = [
-    { question: 'CONST', answer: 'variable that can not change' },
-    { question: 'function() replacement', answer: '() =>' },
-    { question: '**', answer: 'exponentiation operator' }
+  let flashcards = [
+    { question: 'CONST', answer: 'variable that can not change', showBack: false},
+    { question: 'function() replacement', answer: '() =>', showBack: false },
+    { question: '**', answer: 'exponentiation operator', showBack: false }
   ]
+
+  let displayCard = $('#displayCard')
   
-  $('#displayCard').text(flashcards[0].question) //displays the 1st card
+  displayCard.text(flashcards[0].question) //displays the 1st card
+  displayCard.data('index', 0)
 
   //FUNCTIONS --------------------------------------------------------
   function userEnter() {
-    var question = $('#front')[0].value
-    var answer = $('#back')[0].value
+    let question = $('#front')[0].value
+    let answer = $('#back')[0].value
 
-    var card = { question: question, answer: answer }
+    let card = { question: question, answer: answer, showBack: false}
     cardAdd(card)
   }
   
@@ -23,22 +26,40 @@ $(document).ready( function() {
     console.log('card added')
   }
   
-  function flipCard(front, back) {
+  function flipCard(index) {
+    
+    if (flashcards[index].showBack == true) {
+      displayCard.text(flashcards[index].answer)
+    } else {
+      displayCard.text(flashcards[index].question)
+    }
+    flashcards[index].showBack = !flashcards[index].showBack
+  }
 
+  function nextCard() {
+    let index
+    if (flashcards.length === displayCard.data().index + 1) {
+      index = 0
+    } else {
+      index = displayCard.data().index + 1
+    }
+
+    displayCard.text(flashcards[index].question)
+    displayCard.data('index', index)
   }
     
-    
     //LISTENERS --------------------------------------------------------
-    $('#addCardButton').on('click', function() {
+    $('#addCardButton').on('click', () => {
       userEnter()
     })
 
-    $('#flipCard').on('click', function () {
-      if ($('#displayCard').text() == question) {
-        $('#displayCard').text(answer)
-      } else {
-        $('#displayCard').text(question)
-      }
+    $('#nextCard').on('click', () => {
+      nextCard()
+    })
+
+    $('#flipCard').on('click', () => {
+      index = displayCard.data().index
+      flipCard(index)
     })
 })
             
