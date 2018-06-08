@@ -5,11 +5,26 @@
   </head>
 
   <body>
-    <h1>Flash Cards</h1>
+    <center>
+      <h1>Flash Cards</h1>
+    </center> 
 
-    <p></p>
+    <div id="newCards" >
+      <center>
+        Question:<input type="text" id="front" name="front"/>
+        Answer: <input type="text" id="back" name="back"/>
+        <input type="button" value="Add a Card" id="addCardButton"/>
+      </center>
+    </div>
 
+    <hr />
+    <div id="card">
+      <h3 id="displayCard">card will be displayed here</h3>
+      <button id="flipCard">Flip Card</button>
+      <button id="nextCard">Next Card</button>
+    </div>
 
+    <div></div>
 
     <!-- webpack/jquery src="/dist/bundle.js" -->
     <script src="./js/jquery-3.3.1.min.js"></script>
